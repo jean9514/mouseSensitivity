@@ -1,31 +1,36 @@
 "use strict";
 
 document.addEventListener("DOMContentLoaded", init);
+
 let img;
+
 const ctx = document.querySelector(`#imageCanvas`).getContext(`2d`);
-const zoomCtx = document.querySelector(`#zoomCanvas`).getContext(`2d`);
+let w;
+let h;
 let colorInfo;
 let myImageData;
+
 let width = 500;
 let height = 600;
 
 let zoomData = null;
 
 function init() {
-  // load img
+  // loads the image in the DOM
   img = new Image();
   img.addEventListener("load", imgLoaded);
   img.src = "cat.jpg";
 }
 
+//now our image is loaded, then we can call on our
 function imgLoaded() {
-  // const width = ctx.canvas.width;
-  // const height = ctx.canvas.height;
   ctx.drawImage(img, 0, 0);
 
   myImageData = getImageData();
   registerMouseMove();
   createZoomData();
+  w = img.width;
+  h = img.height;
 }
 
 function createZoomData() {
@@ -40,34 +45,37 @@ function registerMouseMove() {
   colorInfo = document.querySelector("#imageCanvas");
   colorInfo.addEventListener("mousemove", mouseMoved);
 }
+
 function mouseMoved(e) {
   const x = e.offsetX;
   const y = e.offsetY;
+
   console.log(e);
   console.log(x, y);
-  const rgb = getColorAtPixel(x, y);
-  showColorInfo(rgb);
+
+  // this gives us the X an Y coordinats printet out on the screen
+  let mouseXratio = (x / w) * 2 - 1;
+  document.querySelector("#myXvalue").textContent = mouseXratio;
+  let mouseYratio = (y / h) * 2 - 1;
+  document.querySelector("#myYvalue").textContent = mouseYratio;
 
   ctx.putImageData(myImageData, 0, 0);
   drawRectangle(x, y);
-
-  copyPixels(x, y);
-  showZoomData();
 }
 
 function getColorAtPixel(x, y) {
   const pixelIndex = 4 * (x + y * width);
-  const r = myImageData.data[pixelIndex];
-  const g = myImageData.data[pixelIndex + 1];
-  const b = myImageData.data[pixelIndex + 2];
+  const r = myImageData.data[pixelIndex]; //red
+  const g = myImageData.data[pixelIndex + 1]; //green
+  const b = myImageData.data[pixelIndex + 2]; //blue
 
   return { r, g, b };
 }
 
+//this here is our moving rectangle, the color and the size of the rectangle
 function drawRectangle(x, y) {
-  ctx.strokeStyle = "green";
+  ctx.strokeStyle = "#FF05FF";
   ctx.strokeRect(x - 5, y - 5, 10, 10);
-  // ctx.moveTo(x, y);
 }
 
 function getImageData() {
@@ -90,7 +98,7 @@ function showColorInfo(rgb) {
 
   document.querySelector("#colorbox").style.backgroundColor = hex;
 }
-// part 10
+//
 function copyPixels(startX, startY) {
   const w = zoomCtx.canvas.width;
   const imageW = ctx.canvas.width;
@@ -99,10 +107,13 @@ function copyPixels(startX, startY) {
     for (let x = 0; x < 10; x++) {
       const pixelIndex = (x + y * w) * 4;
 
+      //this is the position of the curser(startX and startY) + variables from our 2 dimensional for loop.
       const imageX = startX + x;
       const imageY = startY + y;
 
       const imageIndex = (imageX + imageY * imageW) * 4;
+
+      // this part gets the pixel position from our imageIndex and displays them in our zoomData.
       zoomData.data[pixelIndex + 0] = myImageData.data[imageIndex + 0]; //red
       zoomData.data[pixelIndex + 1] = myImageData.data[imageIndex + 1]; //green
       zoomData.data[pixelIndex + 2] = myImageData.data[imageIndex + 2]; //blue

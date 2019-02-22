@@ -11,21 +11,12 @@
     <h1>Color Picker</h1>
     <div id="sidebyside">
       <div id="original">
-        <canvas id="imageCanvas" width="500" height="600"></canvas>
-      </div>
-      <div id="zoomed">
-        <canvas id="zoomCanvas" width="10" height="10"></canvas>
-        <div id="color">
-          <div id="colorbox"></div>
-          <div id="colorinfo">
-            <div id="rgb">
-              R: <span id="r">245</span><br />
-              G: <span id="g">42</span><br />
-              B: <span id="b">43</span><br />
-            </div>
-            <div id="hex">#ae3412</div>
-          </div>
+        <div id="debug">
+          <p>X = <span id="myXvalue"></span></p>
+          <p>Y = <span id="myYvalue"></span></p>
         </div>
+
+        <canvas id="imageCanvas" width="500" height="600"></canvas>
       </div>
     </div>
 

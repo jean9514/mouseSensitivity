@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Color Picker</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Color Picker</h1>
+    <div id="sidebyside">
+      <div id="original">
+        <canvas id="imageCanvas" width="500" height="600"></canvas>
+      </div>
+      <div id="zoomed">
+        <canvas id="zoomCanvas" width="10" height="10"></canvas>
+        <div id="color">
+          <div id="colorbox"></div>
+          <div id="colorinfo">
+            <div id="rgb">
+              R: <span id="r">245</span><br />
+              G: <span id="g">42</span><br />
+              B: <span id="b">43</span><br />
+            </div>
+            <div id="hex">#ae3412</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="mousesensitivity.js"></script>
+  </body>
+</html>
